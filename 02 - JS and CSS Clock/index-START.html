@@ -85,16 +85,20 @@
       const dateTime = new Date();
       //秒
       const second = dateTime.getSeconds();
+      //秒數轉換成角度 360度一圈 /60秒 *秒數 
       const secondAngle = ((360 / 60) * second);
       secondHandHour.style.transform = `rotate(${secondAngle}deg)`;
 
       //分
       const min = dateTime.getMinutes();
-      const minecondAngle = ((360 / 60) * min) + min;
+      //分數轉換成角度 360度一圈 /60分*分數 + 秒數 * 1分角度/60秒
+      const minecondAngle = ((360 / 60) * min) + (second * 0.1);
       minHand.style.transform = `rotate(${minecondAngle}deg)`;
+      
       //時
       const hour = dateTime.getHours();
-      const hourAngle = ((360 / 12) * hour)+ (min/2);
+      //時數轉換成角度 360度一圈 /12時*時數 + 分數 * 1時角度/60分
+      const hourAngle = ((360 / 12) * hour) + (min * 0.5);
       hourHand.style.transform = `rotate(${hourAngle}deg)`;
 
       console.clear();
