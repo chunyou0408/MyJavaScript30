@@ -237,8 +237,6 @@
     let menus = document.querySelectorAll('.cool > li');
     //移動的白色框框
     let dropdownBackground = document.querySelector('.dropdownBackground');
-    //NAV列表
-    let cool = document.querySelector('.cool');
 
     menus.forEach(menu => {
       menu.addEventListener('mouseenter', enterhandler);
@@ -248,7 +246,7 @@
     function enterhandler() {
       //顯示白色框框
       dropdownBackground.classList.add('open');
-      
+
       //當碰到按鈕時,將trigger-enter加上class,顯示內容(display)
       this.classList.add('trigger-enter');
       //加上trigger-enter-active 顯示,透明度設定1
@@ -259,23 +257,22 @@
         }
       }, 100);
 
+      //位置
+      const dropdown = this.querySelector('.dropdown');  //內容
+      const rect = dropdown.getBoundingClientRect();   //將內容座標位置讀取
+      const navRect = document.querySelector('.top').getBoundingClientRect(); //NAV 座標位置讀取
 
 
-
-
-      const dropdown = this.querySelector('.dropdown');
-      const rect = dropdown.getBoundingClientRect();
-      const navRect = cool.getBoundingClientRect();
-
-
+      //白色框框跟內容一樣寬與高,座標位置高度必須減掉NAV
       dropdownBackground.style.height = rect.height + "px";
       dropdownBackground.style.width = rect.width + "px";
       dropdownBackground.style.top = rect.top - navRect.top + "px";
-      dropdownBackground.style.left = rect.left - navRect.left + "px";
+      dropdownBackground.style.left = rect.left + "px";
     }
 
 
 
+    //離開按鈕時時移除
     function leavehandler() {
       this.classList.remove('trigger-enter');
       this.classList.remove('trigger-enter-active');
