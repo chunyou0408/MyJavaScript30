@@ -174,16 +174,18 @@
   <script>
     let nav = document.querySelector('nav');
     let logo = document.querySelector('.logo');
-    let header = document.querySelector('header');
+    let navTop = nav.offsetTop;
 
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY > header.offsetHeight) {
-        console.log(window.scrollY);
-        console.log(nav.offsetHeight + 'px');
+      if (window.scrollY >= navTop) {
         logo.style.maxWidth = 500 + 'px';
+        nav.style.position = 'fixed';
+        //用sticky最上面會貼不齊
+        // nav.style.position = 'sticky';
       } else {
         logo.style.maxWidth = 0;
+        nav.style.position = 'relative';
       }
 
     });

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Understanding JavaScript's Capture</title>
 </head>
+
 <body class="bod">
 
   <div class="one">
@@ -13,36 +15,68 @@
     </div>
   </div>
 
-<style>
-  html {
-    box-sizing: border-box;
-  }
-  
-  *, *:before, *:after { 
-    box-sizing: inherit; 
-  }
+  <style>
+    html {
+      box-sizing: border-box;
+    }
 
-  div {
-    width: 100%;
-    padding: 100px;
-  }
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
 
-  .one {
-    background: thistle;
-  }
+    div {
+      width: 100%;
+      padding: 100px;
+    }
 
-  .two {
-    background: mistyrose;
-  }
+    .one {
+      background: thistle;
+    }
 
-  .three {
-    background: coral;
-  }
-</style>
+    .two {
+      background: mistyrose;
+    }
 
-<button></button>
-<script>
+    .three {
+      background: coral;
+    }
+  </style>
 
-</script>
+  <button>button</button>
+  <script>
+    const divs = document.querySelectorAll('div');
+    const button = document.querySelector('button');
+    // addEventListener 第三個選項 {capture: true,once: false}
+    // capture 事件機制, once 單次執行, 預設都是false
+    // 事件機制
+
+    // 事件冒泡 (Event Bubbling)
+    // 事件冒泡指的是「從啟動事件的元素節點開始，逐層往上傳遞」，直到整個網頁的根節點，也就是 document。
+    // 例(three two one)
+
+    // 事件捕獲 (Event Capturing)
+    //「事件冒泡」機制是由下往上來傳遞，那麼「事件捕獲」(Event Capturing) 機制則正好相反。
+    // 例(one two three)
+    divs.forEach(div => div.addEventListener('click', clickHandler, {
+      capture: true,
+      once: false
+    }));
+
+    function clickHandler(e) {
+      // 阻止當前事件繼續進行捕捉（capturing）及冒泡（bubbling）階段的傳遞。
+      // e.stopPropagation();   
+      console.log(this.classList.value);
+    }
+
+    button.addEventListener('click', () => {
+      console.log('Click!!!');
+    }, {
+      once: true
+    });
+
+  </script>
 </body>
+
 </html>
