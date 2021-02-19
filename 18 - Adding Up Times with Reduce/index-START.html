@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -181,7 +183,25 @@
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+    let li = document.querySelectorAll('li')
+    // let time = Array.from(li).map(item=>item)
+    // 將取出來的值放到陣列內,再使用split()拆開並把時間加總為秒數
+    // 最後再用reduce()加總
+    let timeArray = [...li].map(item => item.dataset.time).map(time => {
+      let [min, sec] = time.split(":")
+      return min * 60 + sec * 1
+    }).reduce((prev, next) => prev + next, 0)
+
+
+    //將算出來的秒數分別計算時分秒
+    hours = Math.floor(timeArray / 60 / 60);
+    mins = Math.floor(timeArray / 60 % 60);
+    secondsLeft = timeArray % 60 % 60;
+
+    console.log(hours, mins, secondsLeft);
+
+  </script>
 </body>
+
 </html>

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -26,16 +28,46 @@
 
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
+    // 利用some()判斷people陣列內有沒有大於18歲
+
+    let ans1_1 = people.some(person => {
+      return ((new Date().getFullYear()) - person.year >= 19)
+    });
+    console.log({ ans1_1 });
+
     // Array.prototype.every() // is everyone 19 or older?
+    // 利用every()判斷people陣列內是不是都大於18歲
+
+    let ans1_2 = people.every(person => {
+      return ((new Date().getFullYear()) - person.year >= 19)
+    });
+    console.log({ ans1_2 });
 
     // Array.prototype.find()
     // Find is like filter, but instead returns just the one you are looking for
     // find the comment with the ID of 823423
+    // 利用find()尋找comments陣列內的ID是823423,將它顯示出來
+
+    let ans2 = comments.find((comment) => {
+      return comment.id == 823423
+    })
+    console.log(ans2);
+
 
     // Array.prototype.findIndex()
     // Find the comment with this ID
     // delete the comment with the ID of 823423
+    // 利用findIndex()尋找comments陣列內的ID是823423,將它的位置顯示出來
+    let ans3 = comments.findIndex((comment) => {
+      return comment.id == 823423
+    })
+
+    //利用splice將這個ID整個刪除
+    comments.splice(ans3, 1);
+
+    console.log(comments);
 
   </script>
 </body>
+
 </html>

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Console Tricks!</title>
 </head>
+
 <body>
 
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
@@ -17,30 +19,72 @@
       p.style.fontSize = '50px';
     }
 
-    // Regular
+    //練習console的各種顯示
 
-    // Interpolated
+    // Regular 顯示
+    console.log('hello world');
 
-    // Styled
+    // Interpolated 在裡面插入,%s字串,%d數字
+    console.log('Hello I am a %s %d  string!', '💩', 1000);
 
-    // warning!
+    // Styled 加入CSS屬性
+    console.log('%c I am some great text', 'font-size:50px; background:yellow; text-shadow: 10px 10px 0 blue');
+    // warning! 示警
+    console.warn('OH NOOO');
 
-    // Error :|
+    // Error :| 錯誤
+    console.error('Shit!');
 
-    // Info
-
+    // Info 資訊, 看不出來差別...
+    console.info('Crocodiles eat 3-4 people per year');
     // Testing
 
-    // clearing
+    const p = document.querySelector('p');
 
-    // Viewing DOM Elements
+    //assert()如果條件等於false,就顯示後面的字
+    console.assert(p.classList.contains('ouch'), 'That is wrong!');
+    // clearing 清除
+    console.clear();
 
-    // Grouping together
+    // Viewing DOM Elements 顯示DOM的元素
+    console.log(p);
 
-    // counting
+    console.dir(p);
+    // Grouping together 將顯示的log群組
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`);
+    });
+    // counting 計算次數
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
 
-    // timing
+    console.clear();
 
+    // timing 顯示處理時間,A行到B行的時間
+    console.time('fetching data');
+    fetch('https://api.github.com/users/wesbos')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+      });
+
+    console.table(dogs);
   </script>
 </body>
+
 </html>

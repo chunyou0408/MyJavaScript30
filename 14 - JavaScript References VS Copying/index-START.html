@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS Reference VS Copy</title>
 </head>
+
 <body>
 
   <script>
@@ -29,6 +31,10 @@
     // one way
 
     // or create a new array and concat the old one in
+    const playerscopy = players.map(player => player)
+    playerscopy[0] = 'AAA';
+    console.log(playerscopy);
+    console.log(players);
 
     // or use the new ES6 Spread
 
@@ -43,8 +49,19 @@
     };
 
     // and think we make a copy:
+    let p2 = person;
+
+    // person = "XXX";
+    // console.log(person,p2); //XXX,{...}
+
+    // person.name ="XXX";
+    // console.log(person,p2); //{XXX...},(XXX...)
 
     // how do we take a copy instead?
+
+    // 利用Object.assign複製物件
+    let p3 = Object.assign({}, person);
+    console.log(p3);
 
     // We will hopefully soon see the object ...spread
 
@@ -53,4 +70,5 @@
   </script>
 
 </body>
+
 </html>

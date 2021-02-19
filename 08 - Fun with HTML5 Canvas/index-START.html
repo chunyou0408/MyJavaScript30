@@ -1,19 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>HTML5 Canvas</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
 </head>
+
 <body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
+  <canvas id="draw" width="1920" height="1080"></canvas>
 
-<style>
-  html, body {
-    margin: 0;
-  }
-</style>
+  <script>
+    (function () {
+      let canvas = document.querySelector('canvas'); //宣告畫板
+      var ctx = canvas.getContext('2d'); //使用的模式
+      let colorDeg = 0; //顏色範圍
+      let lineDeg = 80; //線的寬度變數
+      let direction = 1; //線的寬度變化的正負值
+      ctx.strokeStyle = `hsl(${colorDeg},100%,50%)`; //顏色變化 0~360
+      ctx.lineWidth = `${lineDeg}`; //線的寬度
+      ctx.lineCap = 'round'; //線的頂點模式
+      ctx.lineJoin = 'round';//兩條線連接的角
 
+      let drawing = false; //畫線開關
+      let x = 0, y = 0; //畫板位置,紀錄A點到B點的線
+
+      canvas.addEventListener('mousedown', (e) => {
+        drawing = true;
+        [x, y] = [e.offsetX, e.offsetY];
+      })
+
+      canvas.addEventListener('mousemove', (e) => {
+        if (!drawing) return;    //如果drawing不是ture,就返回跳出
+
+        ctx.beginPath(); //畫畫起始
+        colorDeg = colorDeg < 360 ? colorDeg + 1 : 0; //設定顏色變數 0~360 當超過就回到0繼續
+        ctx.strokeStyle = `hsl(${colorDeg},100%,50%)`; //設定顏色
+
+        //設定線條寬度
+        //首先控制線條寬度是變大還是變小,如果超過80或小於1就改變一次
+        if (lineDeg < 1 || lineDeg > 80) {
+          direction *= -1;
+        }
+        lineDeg = lineDeg + 1.2 * direction;//寬度變數,當方向是負值就會變小,反之變大
+        ctx.lineWidth = `${lineDeg}`;//設定寬度
+
+        ctx.moveTo(x, y);   //從哪個點開始畫線
+        ctx.lineTo(e.offsetX, e.offsetY); //畫到哪一個點
+        [x, y] = [e.offsetX, e.offsetY]; //紀錄位置
+        ctx.stroke(); //畫畫執行
+
+
+      })
+
+      canvas.addEventListener('mouseup', () => {
+        drawing = false;
+      })
+
+      canvas.addEventListener('mouseleave', () => {
+        drawing = false;
+      })
+
+
+    })()
+  </script>
 </body>
+
 </html>

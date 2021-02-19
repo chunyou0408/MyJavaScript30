@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -27,6 +29,11 @@
       { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
     ];
 
+    //存活年齡
+    inventors.forEach((inventor) => {
+      inventor.years = inventor.passed - inventor.year
+    })
+
     const people = [
       'Bernhard, Sandra', 'Bethea, Erin', 'Becker, Carl', 'Bentsen, Lloyd', 'Beckett, Samuel', 'Blake, William', 'Berger, Ric', 'Beddoes, Mick', 'Beethoven, Ludwig',
       'Belloc, Hilaire', 'Begin, Menachem', 'Bellow, Saul', 'Benchley, Robert', 'Blair, Robert', 'Benenson, Peter', 'Benjamin, Walter', 'Berlin, Irving',
@@ -34,32 +41,100 @@
       'Berne, Eric', 'Berra, Yogi', 'Berry, Wendell', 'Bevan, Aneurin', 'Ben-Gurion, David', 'Bevel, Ken', 'Biden, Joseph', 'Bennington, Chester', 'Bierce, Ambrose',
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
-    
+
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+
+    //使用filter()找出,出生年在1500~1600之間
+    // let ans = inventors.filter(inventor => {
+    //   return inventor.year >= 1500 && inventor.year < 1600
+    // })
+    // console.table(ans);
+    //------------------------------------------------------------------------
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
 
+    // 使用map()組合,姓名與名字
+    // let ans = inventors.map(inventor=>{
+    // return inventor.first+' '+inventor.last
+    // })
+    // console.table(ans);
+    //------------------------------------------------------------------------
+
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+
+    // 使用sort()排序,出生日期從大排到小
+    // let ans = inventors.sort((a,b)=>{return b.year - a.year})
+    // console.table(ans);
+    //------------------------------------------------------------------------
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
 
+    // 使用forEach(),年齡數字加總
+    // let total = 0
+    // inventors.forEach((inventor)=>{
+    //   total += inventor.passed - inventor.year
+    // })
+    // console.table(total);
+
+    // 使用reduce(),年齡數字加總  // reduce(()=>{})
+
+    // reduce((總數,每筆資料)=>{
+    // return 總數 + 每筆資料.過世年 - 每筆資料.出生年
+    // , 起始值})
+    // let total = inventors.reduce((total, inventor) => {
+    //   return total + inventor.passed - inventor.year
+    // }, 0)
+    // console.table(total);
+    //------------------------------------------------------------------------
+
     // 5. Sort the inventors by years lived
+    // 以年齡排序
+    // let ans = inventors.sort((a,b)=>{
+    //   return (a.passed-a.year) - (b.passed-b.year)
+    // })
+    // console.table(ans);
+    //------------------------------------------------------------------------
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    // 搜尋網頁有出現de的標題
+    // let ary = []
+    // document.querySelectorAll('.mw-category-group li a').forEach((a) => {
+    //   ary.push(a.title)
+    // })
+    // let ans = ary.filter(title => title.indexOf('de') !== -1)
+    //------------------------------------------------------------------------
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    // 排序last name
+    let ans = people.sort((a, b) => {
+      let [aLast, aFirst] = a.split(', ')
+      let [bLast, bFirst] = b.split(', ')
+      return aLast > bLast ? 1 : bLast > aLast ? -1 : 0
+    })
+    console.table(ans);
+    //------------------------------------------------------------------------
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+
+    // 使用reduce(),計算每個字出現的加總
+    // let ans = data.reduce((obj, text) => {
+    //   if (!obj[text]) obj[text] = 1
+    //   else obj[text] += 1
+
+    //   return obj
+    // }, {})
+
+    // console.table(ans);
 
   </script>
 </body>
+
 </html>

@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Key Detection</title>
   <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
 </head>
+
 <body>
-<script>
-</script>
+  <script>
+    (function () {
+      const keyDetection = []
+      const secretCode = [80, 73, 71] //改用keyCode   qazqaz
+      window.addEventListener('keyup', (e) => {
+
+        keyDetection.push(e.keyCode)  //將輸入的按鈕寫進陣列
+
+        //splice( 從陣列的哪裡開始 , 刪除幾個 )
+        //只要超過密碼陣列,就刪除第一個
+        keyDetection.splice(0, keyDetection.length - secretCode.length);
+
+        console.log(String.fromCharCode(e.keyCode).toLowerCase());
+        console.log(keyDetection);
+
+        //如果keyDetection陣列內有包含secretCode,就進入
+        if (keyDetection.join(',').includes(secretCode)) {
+          //利用map產生出新陣列,將keyCode轉成英文再轉成小寫
+          ans = secretCode.map(keyCode => String.fromCharCode(keyCode).toLowerCase());
+          console.log('恭喜 ~ 正確答案:' + ans.join(''));
+          cornify_add();
+        }
+      });
+    })()
+  </script>
 </body>
+
 </html>

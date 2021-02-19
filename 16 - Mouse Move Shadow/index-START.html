@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Mouse Shadow</title>
 </head>
+
 <body>
 
   <div class="hero">
@@ -11,30 +13,74 @@
   </div>
 
   <style>
-  html {
-    color: black;
-    font-family: sans-serif;
-  }
+    html {
+      color: black;
+      font-family: sans-serif;
+    }
 
-  body {
-    margin: 0;
-  }
+    body {
+      margin: 0;
+    }
 
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-  }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+    }
 
-  h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
-    font-size: 100px;
-  }
+    h1 {
+      text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+      font-size: 100px;
+    }
   </style>
 
-<script>
-</script>
+  <script>
+    const hero = document.querySelector('.hero');
+    const text = hero.querySelector('h1');
+
+    function shadow(e) {
+
+      let { offsetX, offsetY } = e;
+
+      if (e.target !== this) {
+        offsetX += e.target.offsetLeft;
+        offsetY += e.target.offsetTop;
+      }
+
+
+
+      //將位置轉換成%數 中心點為50%,50%  左上為0%,0% 右下為100%,100% 
+      x = offsetX / this.offsetWidth;
+      y = offsetY / this.offsetHeight;
+      
+
+
+      // 總寬 - (總寬 * 2 * %數)   
+      //(總寬 * 2 * %數)   當50%的時候會是0  100%的時候會是總寬   0%的時候會等於-總寬
+
+      const xWalk=(this.offsetWidth-(this.offsetWidth*2*x))/4;
+      const yWalk=(this.offsetHeight-(this.offsetHeight*2*y))/4;
+
+      text.style.textShadow = `
+        ${xWalk}px ${yWalk}px 2px rgba(255,0,255,0.7), 
+        ${xWalk*-1}px ${yWalk}px 2px rgba(0,255,255,0.7), 
+        ${yWalk}px ${xWalk*-1}px 2px rgba(0,255,0,0.7),
+        ${yWalk*-1}px ${xWalk}px 2px rgba(0,0,255,0.7)
+      `;
+
+
+
+
+      //text.style.textShadow = `
+      //   ${walk}px 1px 2px red, 
+      //   ${walk * -1}px 0 1em blue, 
+      //   ${walk * -1}px 0 0.2em blue
+      // `;
+    }
+    hero.addEventListener('mousemove', shadow);
+  </script>
 </body>
+
 </html>

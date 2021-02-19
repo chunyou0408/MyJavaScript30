@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Type Ahead 👀</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <form class="search-form">
@@ -14,9 +16,69 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  <script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-</script>
+    const suggestions = document.querySelector('.suggestions');
+
+    const cities = []
+    fetch(endpoint)
+      .then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => cities.push(...response));
+
+    // https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions
+    // MDN-正規表達式
+
+    //尋找符合的資料(輸入的文字,所有資料)
+    function findMatches(wordToMatch, cities) {
+      //用filter挑選所有的資料
+      return cities.filter(place => {
+        // here we need to figure out if the city or state matches what was searched
+        // 利用RegExp比對,'gi'是全域比對並且忽略大小寫 , g：全域比對（Global match）, i：忽略大小寫（Ignore case）
+        const regex = new RegExp(wordToMatch, 'gi');
+        // 將資料輸出(符合城市或州)
+        return place.city.match(regex) || place.state.match(regex)
+      });
+    }
+    //當輸入資料時執行
+    function inputHandler() {
+      //比對
+      const matchArray = findMatches(this.value, cities);
+      //顯示在畫面上
+      //用map的方式,將資料輸出成陣列,利用join("")將陣列組成字串,最後再用.innerHTML顯示
+      const html = matchArray
+        .map(place => {
+          const regex = new RegExp(this.value, 'gi');
+          const cityName = place.city.replace(
+            regex,
+            `<span class="hl">${this.value}</span>`
+          );
+          const stateName = place.state.replace(
+            regex,
+            `<span class="hl">${this.value}</span>`
+          );
+          return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${numberWithCommas(place.population)}</span>
+      </li>
+    `;
+        }).join("");
+      suggestions.innerHTML = html;
+    }
+    //將數字轉為三位數就隔一個逗號
+    function numberWithCommas(x) {
+      // https://regexper.com/ 正則理解
+      // return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      // 或
+      return parseInt(x).toLocaleString();
+    }
+
+    //再輸入框內偵測按鍵抬起,執行接下來的動作
+    document.querySelector('.search').addEventListener('keyup', inputHandler)
+  </script>
 </body>
+
 </html>
